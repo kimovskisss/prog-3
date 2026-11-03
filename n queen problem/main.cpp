@@ -8,17 +8,17 @@ int isSafe(vector<vector<int>>& mat,
     int n = mat.size();
     int i, j;
 
-    // Check this col on upper side
+    // проверка на колоната од горе
     for (i = 0; i < row; i++)
         if (mat[i][col])
             return 0;
 
-    // Check upper diagonal on left side
+    // проверка на горната дијагонала во лево нагоре
     for (i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
         if (mat[i][j])
             return 0;
 
-    // Check upper diagonal on right side
+    // проверка на горната дијагонала во десно 
     for (i = row - 1, j = col + 1; j < n && i >= 0; i--, j++)
         if (mat[i][j])
             return 0;
@@ -26,14 +26,14 @@ int isSafe(vector<vector<int>>& mat,
     return 1;
 }
 
-// Recursive function to place queens
+//функција за поставување кралици
 void placeQueens(int row, vector<vector<int>>& mat, vector<vector<int>>& result) {
     int n = mat.size();
 
-    // base case: If all queens are placed
+    // ако сите се поставени
     if (row == n) {
 
-        // store current solution
+        // го чува моменталното решение
         vector<int> ans;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -46,11 +46,10 @@ void placeQueens(int row, vector<vector<int>>& mat, vector<vector<int>>& result)
         return;
     }
 
-    // Consider the row and try placing
-    // queen in all columns one by one
+    // ги поставува кралицире една по една
     for (int i = 0; i < n; i++) {
 
-        // Check if the queen can be placed
+        // проверка дали може кралици да се постават
         if (isSafe(mat, row, i)) {
             mat[row][i] = 1;
             placeQueens(row + 1, mat, result);
@@ -61,14 +60,14 @@ void placeQueens(int row, vector<vector<int>>& mat, vector<vector<int>>& result)
     }
 }
 
-// Function to find all solutions
+// функција за барање на сите решенија
 vector<vector<int>> nQueen(int n) {
 
-    // Initialize the board
+    // иницијализација на таблата
     vector<vector<int>> mat(n, vector<int>(n, 0));
     vector<vector<int>> result;
 
-    // Place queens
+    // поставување кралици
     placeQueens(0, mat, result);
 
     return result;
